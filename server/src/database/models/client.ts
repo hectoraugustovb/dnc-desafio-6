@@ -2,7 +2,7 @@ import { DataTypes, Model, Optional } from "sequelize";
 import sequelize from "..";
 
 interface ClientInfo {
-    id: string,
+    id?: string,
     cpf: string,
     name: string,
     email: string,
@@ -18,12 +18,6 @@ type ClientInfoCreation = Optional<ClientInfo, 'id'>;
 class Client extends Model<ClientInfo, ClientInfoCreation> {};
 
 Client.init({
-    id: {
-        type: DataTypes.UUID,
-        primaryKey: true,
-        allowNull: false,
-        defaultValue: DataTypes.UUIDV4
-    },
     cpf: {
         type: DataTypes.STRING,
         allowNull: false,
