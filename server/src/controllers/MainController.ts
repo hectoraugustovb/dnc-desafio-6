@@ -15,6 +15,12 @@ const userReqProps = [
     'phone'
 ]
 
+const orderReqProps = [
+    'client_id',
+    'product_id',
+    'amount'
+]
+
 class MainController {
     async getAllUsers (request: Request, res: Response) {
         const response = await mainRepository.getAllUsers();
@@ -56,6 +62,28 @@ class MainController {
             name: data.name,
             price: data.price,
             description: data.description,
+        });
+
+        return res.status(response.code).json(response.data);
+    };
+
+    async getAllOrders (request: Request, res: Response) {
+        const response = await mainRepository.getAllOrders();
+
+        return res.status(response.code).json(response.data);
+    };
+    async createOrder (req: Request, res: Response) {
+        const data = req.body;
+        
+        const missingProp = orderReqProps.find(prop => !data[prop]);
+        if (missingProp) {
+            return res.status(400).json({ message: `Missing property ${missingProp} in the body request` });
+        }
+
+        const response = await mainRepository.createOrder({
+            client_id: data.client_id,
+            product_id: data.product_id,
+            amount: data.amount
         });
 
         return res.status(response.code).json(response.data);

@@ -16,29 +16,32 @@ class Sale extends Model<SaleInfo, SaleInfoCreation> {};
 Sale.init({
     id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        unique: true,
         primaryKey: true,
-        autoIncrement: true,
+        autoIncrement: true
     },
     product_id: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        unique: true,
+        references: {
+            model: 'products',
+            key: 'id'
+        },
+        onDelete: 'CASCADE'
     },
     amount: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        unique: true
     },
     created_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
         allowNull: false,
+        defaultValue: DataTypes.NOW
     },
     updated_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
         allowNull: false,
+        defaultValue: DataTypes.NOW,
     }
 }, {
     tableName: 'sales',

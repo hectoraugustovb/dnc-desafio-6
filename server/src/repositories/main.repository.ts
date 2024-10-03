@@ -1,11 +1,16 @@
-import Client from "../database/models/client";
+import { Client, Order } from "../database/models/index";
 import Product from "../database/models/product"
-import { UserType } from "../utils/types";
+import { UserType } from "../types/types";
 
 export default {
     getAllUsers: async (): Promise<{ code: number, data?: {} }> => {
         try {
-            const users = await Client.findAll();
+            const users = await Client.findAll({
+                include: [{
+                    model: Order,
+                    as: 'orders'
+                }]
+            });
 
             return {
                 code: 200,
@@ -13,6 +18,7 @@ export default {
             }
 
         } catch (error) {
+            console.log(error)
             return {
                 code: 500,
                 data: {
@@ -74,4 +80,59 @@ export default {
             }
         }
     },
+
+    getAllOrders: async (): Promise<{ code: number, data?: {} }> => {
+        try {
+            const orders = await Order.findAll();
+
+            return {
+                code: 200,
+                data: orders
+            }
+
+        } catch (error) {
+            return {
+                code: 500,
+                data: {
+                    message: 'Error fetching orders'
+                }
+            }
+        }
+    },
+
+    createOrder: async (data: { client_id: number, product_id: number, amount: number }): Promise<{ code: number, data?: {} }> => {
+        try {
+            const buyer = await Client.findByPk(data.client_id);
+            const product = await Product.findByPk(data.product_id);
+
+            if (!buyer)
+                return {
+                    code: 404,
+                    data: {
+                        message: 'Buyer not found'
+                    }
+                }
+
+            if (!product)
+                return {
+                    code: 404,
+                    data: {
+                        message: 'Product not found'
+                    }
+                }
+
+            await Order.create({ buyer_id: data.client_id, product_id: data.product_id, amount: data.amount });
+
+            return {
+                code: 201
+            }
+        } catch (error) {
+            return {
+                code: 500,
+                data: {
+                    message: 'Error creating order'
+                }
+            }
+        }
+    }
 }

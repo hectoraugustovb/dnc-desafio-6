@@ -9,6 +9,9 @@ routes
     .post('/users', MainController.createUser)
 
     .get('/products', MainController.getAllProducts)
-    .post('/products', MainController.createProduct);
+    .post('/products', MainController.createProduct)
+
+    .get('/orders', MainController.getAllOrders)
+    .post('/orders', MainController.createOrder);
 
 export default routes;

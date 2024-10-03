@@ -5,6 +5,7 @@ interface OrderInfo {
     id: number,
     product_id: number,
     buyer_id: number,
+    amount: number,
     created_at?: string,
     updated_at?: string,
 }
@@ -16,29 +17,39 @@ class Order extends Model<OrderInfo, OrderInfoCreation> {};
 Order.init({
     id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        unique: true,
         primaryKey: true,
-        autoIncrement: true,
+        autoIncrement: true
     },
     product_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        unique: true
+        references: {
+            model: 'products',
+            key: 'id'
+        }
     },
     buyer_id: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+            model: 'clients',
+            key: 'id'
+        },
+        onDelete: 'CASCADE'
+    },
+    amount: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
     },
     created_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
         allowNull: false,
+        defaultValue: DataTypes.NOW
     },
     updated_at: {
         type: DataTypes.DATE,
+        allowNull: false,
         defaultValue: DataTypes.NOW,
-        allowNull: false
     }
 }, {
     tableName: 'orders',
