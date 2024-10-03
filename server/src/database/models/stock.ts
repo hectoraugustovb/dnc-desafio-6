@@ -1,7 +1,7 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import sequelize from "..";
 
-interface SaleInfo {
+interface StockInfo {
     id: number,
     product_id: number,
     amount: number,
@@ -9,11 +9,11 @@ interface SaleInfo {
     updated_at?: string
 }
 
-type SaleInfoCreation = Optional<SaleInfo, 'id'>;
+type StockInfoCreation = Optional<StockInfo, 'id'>;
 
-class Sale extends Model<SaleInfo, SaleInfoCreation> {};
+class Stock extends Model<StockInfo, StockInfoCreation> {};
 
-Sale.init({
+Stock.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -44,8 +44,8 @@ Sale.init({
         defaultValue: DataTypes.NOW,
     }
 }, {
-    tableName: 'sales',
+    tableName: 'stock',
     sequelize
 });
 
-export default Sale;
+export default Stock;

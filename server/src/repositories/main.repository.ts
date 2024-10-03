@@ -1,5 +1,4 @@
-import { Client, Order } from "../database/models/index";
-import Product from "../database/models/product"
+import { Client, Order, Product, Stock } from "../database/models/index";
 import { UserType } from "../types/types";
 
 export default {
@@ -18,7 +17,6 @@ export default {
             }
 
         } catch (error) {
-            console.log(error)
             return {
                 code: 500,
                 data: {
@@ -44,10 +42,16 @@ export default {
             }
         }
     },
+    
 
     getAllProducts: async (): Promise<{ code: number, data?: {} }> => {
         try {
-            const products = await Product.findAll();
+            const products = await Product.findAll({
+                include: [{
+                    model: Stock,
+                    as:'stock'
+                }]
+            });
 
             return {
                 code: 200,
@@ -64,9 +68,17 @@ export default {
         }
     },
 
-    createProduct: async (data: { name: string, price: number, description: string }): Promise<{ code: number, data?: {} }>  => {
+    createProduct: async (data: { name: string, price: number, amount: number, description: string }): Promise<{ code: number, data?: {} }>  => {
         try {
-            await Product.create(data)
+            const newProduct = await Product.create({
+                name: data.name,
+                price: data.price,
+                description: data.description,
+            })
+            await Stock.create({
+                product_id: newProduct.dataValues.id,
+                amount: data.amount
+            })
             
             return {
                 code: 201
@@ -80,6 +92,7 @@ export default {
             }
         }
     },
+    
 
     getAllOrders: async (): Promise<{ code: number, data?: {} }> => {
         try {
@@ -134,5 +147,5 @@ export default {
                 }
             }
         }
-    }
+    },
 }

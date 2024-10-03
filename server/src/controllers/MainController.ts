@@ -5,6 +5,7 @@ import mainRepository from '../repositories/main.repository';
 const productReqProps = [
     'name',
     'price',
+    'amount',
     'description',
 ]
 
@@ -62,6 +63,7 @@ class MainController {
             name: data.name,
             price: data.price,
             description: data.description,
+            amount: data.amount
         });
 
         return res.status(response.code).json(response.data);
