@@ -29,7 +29,6 @@ Product.init({
     description: {
         type: DataTypes.TEXT,
         allowNull: false,
-        unique: true
     },
     price: {
         type: DataTypes.FLOAT,
