@@ -5,6 +5,7 @@ interface SaleInfo {
     id: number,
     product_id: number,
     buyer_id: number,
+    amount: number,
     created_at?: string
 }
 
@@ -33,6 +34,10 @@ Sale.init({
             model: 'clients',
             key: 'id'
         }
+    },
+    amount: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
     },
     created_at: {
         type: DataTypes.DATE,

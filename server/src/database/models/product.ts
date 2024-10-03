@@ -6,6 +6,9 @@ interface ProductInfo {
     name: string,
     description: string,
     price: number,
+    stock?: {
+        amount: number
+    },
     created_at?: string,
     updated_at?: string,
 }
