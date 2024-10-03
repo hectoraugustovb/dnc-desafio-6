@@ -14,7 +14,7 @@ module.exports = {
         allowNull: false,
         unique: true,
         references: {
-          model: 'product',
+          model: 'products',
           key: 'id'
         },
         onDelete: 'CASCADE'

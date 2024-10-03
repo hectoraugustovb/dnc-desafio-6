@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('orders', {
+    await queryInterface.createTable('sales', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -23,24 +23,17 @@ module.exports = {
         references: {
           model: 'clients',
           key: 'id'
-        },
-        onDelete: 'CASCADE'
+        }
       },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.NOW
-      },
-      updated_at: {
-        type: Sequelize.DATE,
-        allowNull: false,
-        defaultValue: Sequelize.NOW,
-        onUpdate: Sequelize.NOW
       }
     });
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable('orders');
+    await queryInterface.dropTable('sales');
   }
 };

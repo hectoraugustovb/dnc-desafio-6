@@ -10,7 +10,7 @@ module.exports = {
         autoIncrement: true
       },
       cpf: {
-        type: Sequelize.STRING,
+        type: Sequelize.BIGINT,
         allowNull: false,
         unique: true,
       },
@@ -23,16 +23,8 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
-      password: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      cep: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
       phone: {
-        type: Sequelize.STRING,
+        type: Sequelize.BIGINT,
         allowNull: false,
       },
       created_at: {
