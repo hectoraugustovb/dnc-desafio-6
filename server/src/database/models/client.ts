@@ -2,13 +2,11 @@ import { DataTypes, Model, Optional } from "sequelize";
 import sequelize from "..";
 
 interface ClientInfo {
-    id?: string,
-    cpf: string,
+    id?: number,
+    cpf: number,
     name: string,
     email: string,
-    password: string,
-    cep: string,
-    phone: string,
+    phone: number,
     created_at?: string,
     updated_at?: string,
 }
@@ -18,8 +16,15 @@ type ClientInfoCreation = Optional<ClientInfo, 'id'>;
 class Client extends Model<ClientInfo, ClientInfoCreation> {};
 
 Client.init({
+    id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        unique: true,
+        primaryKey: true,
+        autoIncrement: true,
+    },
     cpf: {
-        type: DataTypes.STRING,
+        type: DataTypes.BIGINT,
         allowNull: false,
         unique: true
     },
@@ -32,16 +37,8 @@ Client.init({
         allowNull: false,
         unique: true
     },
-    password: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    cep: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
     phone: {
-        type: DataTypes.STRING,
+        type: DataTypes.BIGINT,
         allowNull: false,
         unique: true
     },

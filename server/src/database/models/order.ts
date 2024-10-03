@@ -2,7 +2,7 @@ import { DataTypes, Model, Optional } from "sequelize";
 import sequelize from "..";
 
 interface OrderInfo {
-    id: string,
+    id: number,
     product_id: number,
     buyer_id: number,
     created_at?: string,
@@ -15,18 +15,19 @@ class Order extends Model<OrderInfo, OrderInfoCreation> {};
 
 Order.init({
     id: {
-        type: DataTypes.UUID,
-        primaryKey: true,
+        type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: DataTypes.UUIDV4
+        unique: true,
+        primaryKey: true,
+        autoIncrement: true,
     },
     product_id: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         allowNull: false,
         unique: true
     },
     buyer_id: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         allowNull: false
     },
     created_at: {

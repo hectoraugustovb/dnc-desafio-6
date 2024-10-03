@@ -2,7 +2,7 @@ import { DataTypes, Model, Optional } from "sequelize";
 import sequelize from "..";
 
 interface ProductInfo {
-    id: string,
+    id: number,
     name: string,
     description: string,
     price: number,
@@ -16,22 +16,23 @@ class Product extends Model<ProductInfo, ProductInfoCreation> {};
 
 Product.init({
     id: {
-        type: DataTypes.NUMBER,
-        primaryKey: true,
+        type: DataTypes.INTEGER,
         allowNull: false,
-        unique: true
+        unique: true,
+        primaryKey: true,
+        autoIncrement: true,
     },
     name: {
         type: DataTypes.STRING,
         allowNull: false
     },
     description: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
         unique: true
     },
     price: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.FLOAT,
         allowNull: false
     },
     created_at: {
