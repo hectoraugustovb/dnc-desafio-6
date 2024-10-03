@@ -8,6 +8,9 @@ export default {
                 include: [{
                     model: Order,
                     as: 'orders'
+                }, {
+                    model: Sale,
+                    as: 'sales'
                 }]
             });
 
@@ -66,7 +69,7 @@ export default {
             const products = await Product.findAll({
                 include: [{
                     model: Stock,
-                    as:'stock'
+                    as: 'stock'
                 }]
             });
 
@@ -130,7 +133,15 @@ export default {
 
     getAllOrders: async (): Promise<{ code: number, data?: {} }> => {
         try {
-            const orders = await Order.findAll();
+            const orders = await Order.findAll({
+                include: [{
+                    model: Client,
+                    as: 'client'
+                }, {
+                    model: Product,
+                    as: 'product'
+                }]
+            });
 
             return {
                 code: 200,
@@ -203,7 +214,15 @@ export default {
    
     getAllSales: async (): Promise<{ code: number, data?: {} }> => {
         try {
-            const sales = await Sale.findAll();
+            const sales = await Sale.findAll({
+                include: [{
+                    model: Client,
+                    as: 'client'
+                }, {
+                    model: Product,
+                    as: 'product'
+                }]
+            });
 
             return {
                 code: 200,
@@ -211,6 +230,7 @@ export default {
             }
 
         } catch (error) {
+            console.log(error)
             return {
                 code: 500,
                 data: {
