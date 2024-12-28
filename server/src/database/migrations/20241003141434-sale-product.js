@@ -3,11 +3,20 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('stock', {
+    await queryInterface.createTable('sale_product', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
+      },
+      sale_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'sales',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       product_id: {
         type: Sequelize.INTEGER,
@@ -15,7 +24,7 @@ module.exports = {
           model: 'products',
           key: 'id'
         },
-        allowNull: false,
+        onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
       amount: {
@@ -26,17 +35,11 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.NOW
-      },
-      updated_at: {
-        type: Sequelize.DATE,
-        allowNull: false,
-        defaultValue: Sequelize.NOW,
-        onUpdate: Sequelize.NOW
       }
     });
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable('stock');
+    await queryInterface.dropTable('sale_product');
   }
 };

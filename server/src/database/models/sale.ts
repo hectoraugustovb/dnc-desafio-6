@@ -3,8 +3,7 @@ import sequelize from "..";
 
 interface SaleInfo {
     id: number,
-    product_id: number,
-    buyer_id: number,
+    total_price: number,
     created_at?: string
 }
 
@@ -15,23 +14,17 @@ class Sale extends Model<SaleInfo, SaleInfoCreation> {};
 Sale.init({
     id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        unique: true,
         primaryKey: true,
-        autoIncrement: true,
+        autoIncrement: true
     },
-    product_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-    buyer_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false
+    total_price: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
     },
     created_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
         allowNull: false,
+        defaultValue: DataTypes.NOW
     }
 }, {
     tableName: 'sales',

@@ -6,6 +6,9 @@ interface ProductInfo {
     name: string,
     description: string,
     price: number,
+    stock?: {
+        amount: number
+    },
     created_at?: string,
     updated_at?: string,
 }
@@ -29,7 +32,6 @@ Product.init({
     description: {
         type: DataTypes.TEXT,
         allowNull: false,
-        unique: true
     },
     price: {
         type: DataTypes.FLOAT,

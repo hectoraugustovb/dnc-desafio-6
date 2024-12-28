@@ -3,10 +3,10 @@ import sequelize from "..";
 
 interface OrderInfo {
     id: number,
-    product_id: number,
     buyer_id: number,
+    total_price: number,
+    status?: 'pending' | 'processing' |'shipped' | 'delivered' | 'cancelled',
     created_at?: string,
-    updated_at?: string,
 }
 
 type OrderInfoCreation = Optional<OrderInfo, 'id'>;
@@ -16,29 +16,30 @@ class Order extends Model<OrderInfo, OrderInfoCreation> {};
 Order.init({
     id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        unique: true,
         primaryKey: true,
-        autoIncrement: true,
-    },
-    product_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        unique: true
+        autoIncrement: true
     },
     buyer_id: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        references: {
+          model: 'clients',
+          key: 'id'
+        },
+        allowNull: false,
+    },
+    total_price: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+    },
+    status: {
+        type: DataTypes.ENUM('pending', 'processing', 'shipped', 'delivered', 'cancelled'),
+        allowNull: false,
+        defaultValue: 'pending'
     },
     created_at: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
         allowNull: false,
-    },
-    updated_at: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-        allowNull: false
+        defaultValue: DataTypes.NOW
     }
 }, {
     tableName: 'orders',
