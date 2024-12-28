@@ -4,3 +4,12 @@ export type UserType = {
     phone: number,
     cpf: number,
 }
+
+export type OrderType = { 
+    client_id: number, 
+    products: { 
+        id: number, 
+        amount: string 
+    }[], 
+    amount: number 
+}

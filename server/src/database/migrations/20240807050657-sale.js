@@ -9,24 +9,8 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true
       },
-      product_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'products',
-          key: 'id'
-        }
-      },
-      buyer_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'clients',
-          key: 'id'
-        }
-      },
-      amount: {
-        type: Sequelize.INTEGER,
+      total_price: {
+        type: Sequelize.FLOAT,
         allowNull: false,
       },
       created_at: {

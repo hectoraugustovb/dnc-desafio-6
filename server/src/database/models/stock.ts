@@ -21,12 +21,11 @@ Stock.init({
     },
     product_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        unique: true,
         references: {
-            model: 'products',
-            key: 'id'
+          model: 'products',
+          key: 'id'
         },
+        allowNull: false,
         onDelete: 'CASCADE'
     },
     amount: {
@@ -41,7 +40,7 @@ Stock.init({
     updated_at: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: DataTypes.NOW,
+        defaultValue: DataTypes.NOW
     }
 }, {
     tableName: 'stock',

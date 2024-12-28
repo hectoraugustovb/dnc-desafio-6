@@ -9,37 +9,27 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true
       },
-      product_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'products',
-          key: 'id'
-        }
-      },
       buyer_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: {
           model: 'clients',
           key: 'id'
         },
-        onDelete: 'CASCADE'
-      },
-      amount: {
-        type: Sequelize.INTEGER,
         allowNull: false,
+      },
+      total_price: {
+        type: Sequelize.FLOAT,
+        allowNull: false,
+      },
+      status: {
+        type: Sequelize.ENUM('pending', 'processing', 'shipped', 'delivered', 'cancelled'),
+        allowNull: false,
+        defaultValue: 'pending'
       },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.NOW
-      },
-      updated_at: {
-        type: Sequelize.DATE,
-        allowNull: false,
-        defaultValue: Sequelize.NOW,
-        onUpdate: Sequelize.NOW
       }
     });
   },

@@ -1,5 +1,6 @@
+import connection from "../database";
 import { Client, Order, Product, Sale, Stock } from "../database/models/index";
-import { UserType } from "../types/types";
+import { OrderType, UserType } from "../types/types";
 
 export default {
     getAllUsers: async (): Promise<{ code: number, data?: {} }> => {
@@ -149,6 +150,7 @@ export default {
             }
 
         } catch (error) {
+            console.log(error);
             return {
                 code: 500,
                 data: {
@@ -158,10 +160,11 @@ export default {
         }
     },
 
-    createOrder: async (data: { client_id: number, product_id: number, amount: number }): Promise<{ code: number, data?: {} }> => {
+    createOrder: async (data: OrderType): Promise<{ code: number, data?: {} }> => {
+        const transaction = await connection.transaction();
+
         try {
             const buyer = await Client.findByPk(data.client_id);
-            const product = await Product.findByPk(data.product_id);
 
             if (!buyer)
                 return {
@@ -171,20 +174,59 @@ export default {
                     }
                 }
 
-            if (!product)
+            const foundProducts = await Product.findAll({
+                where: {
+                    id: data.products.map(product => product.id)
+                }
+            });
+    
+            if (foundProducts.length !== data.products.length) {
                 return {
                     code: 404,
                     data: {
-                        message: 'Product not found'
+                        message: 'One or more products not found'
                     }
-                }
+                };
+            }
 
-            await Order.create({ buyer_id: data.client_id, product_id: data.product_id, amount: data.amount });
+            let totalPrice = 0;
+            foundProducts.forEach(product => {
+                const productAmount = Number(data.products.find(p => p.id === product.dataValues.id)!.amount);
+                const productPrice = productAmount * product.dataValues.price;
+
+                return totalPrice += productPrice;
+            })
+
+            const order = await Order.create({
+                buyer_id: data.client_id,
+                total_price: totalPrice
+            }, { transaction: transaction });
+
+            for (let product of data.products) {
+                const productToAdd = await Product.findByPk(product.id);
+                if (!productToAdd)
+                    return {
+                        code: 404,
+                        data: {
+                            message: `Product not found: ID - ${product.id}`
+                        }
+                    }
+
+                await order.addProducts(productToAdd, {
+                    through: { amount: product.amount },
+                    transaction: transaction
+                });
+            }
+
+            await transaction.commit();
 
             return {
                 code: 201
             }
         } catch (error) {
+            console.log(error)
+            await transaction.rollback();
+
             return {
                 code: 500,
                 data: {

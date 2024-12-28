@@ -18,8 +18,7 @@ const userReqProps = [
 
 const orderReqProps = [
     'client_id',
-    'product_id',
-    'amount'
+    'products',
 ]
 
 class MainController {
@@ -98,8 +97,7 @@ class MainController {
 
         const response = await mainRepository.createOrder({
             client_id: data.client_id,
-            product_id: data.product_id,
-            amount: data.amount
+            products: data.products,
         });
 
         return res.status(response.code).json(response.data);
