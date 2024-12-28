@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import mainRepository from '../repositories/main.repository';
+import mainRepository from '../repositories/orders.repository';
 
 const orderReqProps = [
     'client_id',

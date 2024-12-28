@@ -1,6 +1,11 @@
 import { Request, Response } from 'express';
 
-import mainRepository from '../repositories/main.repository';
+import mainRepository from '../repositories/sales.repository';
+
+const orderReqProps = [
+    'client_id',
+    'products',
+]
 
 class SalesController {
     async getAllSales (request: Request, res: Response) {
