@@ -1,23 +1,26 @@
 import { Router } from "express";
 
-import MainController from "./controllers/MainController";
+import UsersController from "./controllers/UsersController";
+import ProductsController from "./controllers/ProductsController";
+import OrdersController from "./controllers/OrdersController";
+import SalesController from "./controllers/SalesController";
 
 const routes = Router();
 
 routes
-    .get('/users', MainController.getAllUsers)
-    .post('/users', MainController.createUser)
-    .delete('/users', MainController.deleteUser)
+    .get('/users', UsersController.getAllUsers)
+    .post('/users', UsersController.createUser)
+    .delete('/users', UsersController.deleteUser)
 
-    .get('/products', MainController.getAllProducts)
-    .post('/products', MainController.createProduct)
-    .delete('/products', MainController.deleteProduct)
+    .get('/products', ProductsController.getAllProducts)
+    .post('/products', ProductsController.createProduct)
+    .delete('/products', ProductsController.deleteProduct)
 
-    .get('/orders', MainController.getAllOrders)
-    .post('/orders', MainController.createOrder)
-    .delete('/orders', MainController.deleteOrder)
+    .get('/orders', OrdersController.getAllOrders)
+    .post('/orders', OrdersController.createOrder)
+    .delete('/orders', OrdersController.deleteOrder)
 
-    .get('/sales', MainController.getAllSales)
-    .post('/sales', MainController.createSale);
+    .get('/sales', SalesController.getAllSales)
+    .post('/sales', SalesController.createSale);
 
 export default routes;
