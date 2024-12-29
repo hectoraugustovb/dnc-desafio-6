@@ -1,16 +1,15 @@
-const { AbstractDialect } = require('sequelize/lib/dialects/abstract/index');
+const path = require('path');
+
 require('dotenv').config();
 
 const dbConfig = {
-  host: process.env.DATABASE_HOST,
-  port: Number(process.env.DATABASE_PORT),
-  username: process.env.DATABASE_USER,
-  password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE_NAME,
+  dialect: 'sqlite',
+  storage: path.join(__dirname, '../db/database.sqlite'),
   define: {
     underscored: true,
     timestamps: false
-  }
+  },
+  logging: false
 }
 
 module.exports = dbConfig;

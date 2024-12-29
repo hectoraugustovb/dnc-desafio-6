@@ -1,12 +1,11 @@
 import { Sequelize } from "sequelize";
-import dbConfig from "./config/database"
+import dbConfig from "./config/database";
 
-const connection = new Sequelize(String(dbConfig.database), String(dbConfig.username), dbConfig.password, {
+const connection = new Sequelize({
     dialect: 'sqlite',
-    host: dbConfig.host || './src/database/db/dev.sqlite',
-    port: dbConfig.port,
+    storage: dbConfig.storage,
     define: dbConfig.define,
-    logging: false
-})
+    logging: dbConfig.logging
+});
 
 export default connection;
