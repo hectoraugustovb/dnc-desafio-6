@@ -1,6 +1,6 @@
 import connection from "../database";
 import { Client, Order, Product } from "../database/models/index";
-import { OrderType, UserType } from "../types/types";
+import { OrderType } from "../types/types";
 
 export default {
     getAllOrders: async (): Promise<{ code: number, data?: {} }> => {
@@ -26,6 +26,41 @@ export default {
                 code: 500,
                 data: {
                     message: 'Error fetching orders'
+                }
+            }
+        }
+    },
+
+    getOrder: async (id: number): Promise<{ code: number, data?: {} }> => {
+        try {
+            const order = await Order.findByPk(id, {
+                include: [{
+                    model: Client,
+                    as: 'client'
+                }, {
+                    model: Product,
+                    as: 'product'
+                }]
+            });
+
+            if (!order)
+                return {
+                    code: 404,
+                    data: {
+                        message: 'Order not found'
+                    }
+                }
+
+            return {
+                code: 200,
+                data: order
+            }
+
+        } catch (error) {
+            return {
+                code: 500,
+                data: {
+                    message: 'Error fetching order'
                 }
             }
         }

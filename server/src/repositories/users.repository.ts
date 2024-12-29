@@ -29,6 +29,41 @@ export default {
         }
     },
 
+    getUser: async (id: number): Promise<{ code: number, data?: {} }> => {
+        try {
+            const user = await Client.findByPk(id, {
+                include: [{
+                    model: Order,
+                    as: 'orders'
+                }, {
+                    model: Sale,
+                    as: 'sales'
+                }]
+            });
+
+            if (!user)
+                return {
+                    code: 404,
+                    data: {
+                        message: 'User not found'
+                    }
+                }
+
+            return {
+                code: 200,
+                data: user
+            }
+
+        } catch (error) {
+            return {
+                code: 500,
+                data: {
+                    message: 'Error fetching user'
+                }
+            }
+        }
+    },
+
     createUser: async (data: UserType): Promise<{ code: number, data?: {} }> => {
         try {
             await Client.create(data);

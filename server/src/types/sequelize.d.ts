@@ -6,6 +6,6 @@ declare module '../database/models' {
   }
 
   interface Sale {
-    addProducts: (product: Product | Product[]) => Promise<void>;
+    addProduct: (product: Product, options?: object) => Promise<void>;
   }
 }

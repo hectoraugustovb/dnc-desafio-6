@@ -25,6 +25,38 @@ export default {
         }
     },
 
+    getProduct: async (id: number): Promise<{ code: number, data?: {} }> => {
+        try {
+            const product = await Product.findByPk(id, {
+                include: [{
+                    model: Stock,
+                    as: 'stock'
+                }]
+            });
+
+            if (!product)
+                return {
+                    code: 404,
+                    data: {
+                        message: 'Product not found'
+                    }
+                }
+
+            return {
+                code: 200,
+                data: product
+            }
+
+        } catch (error) {
+            return {
+                code: 500,
+                data: {
+                    message: 'Error fetching product'
+                }
+            }
+        }
+    },
+
     createProduct: async (data: { name: string, price: number, amount: number, description: string }): Promise<{ code: number, data?: {} }>  => {
         try {
             const newProduct = await Product.create({

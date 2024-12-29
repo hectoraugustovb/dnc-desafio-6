@@ -2,6 +2,7 @@ import Client from "./client";
 import Order from "./order";
 import Product from "./product";
 import Sale from "./sale";
+import SalesProducts from "./sales_products";
 import Stock from "./stock";
 
 //----Product to Stock
@@ -21,13 +22,14 @@ Product.belongsToMany(Order, { through: 'order_product', foreignKey: 'product_id
 Order.belongsToMany(Product, { through: 'order_product', foreignKey: 'order_id', otherKey: 'product_id', as: 'products' });
 
 //-----Product to Sale
-Product.belongsToMany(Sale, { through: 'sale_product', foreignKey: 'product_id', otherKey: 'sale_id', as: 'sales' });
-Sale.belongsToMany(Product, { through: 'sale_product', foreignKey: 'sale_id', otherKey: 'product_id', as: 'products' });
+Product.belongsToMany(Sale, { through: SalesProducts, foreignKey: 'product_id', otherKey: 'sale_id', as: 'sales' });
+Sale.belongsToMany(Product, { through: SalesProducts, foreignKey: 'sale_id', otherKey: 'product_id', as: 'products' });
 
 export {
     Client,
     Order,
     Sale,
     Product,
-    Stock
+    Stock,
+    SalesProducts
 };

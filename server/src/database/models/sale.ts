@@ -3,6 +3,7 @@ import sequelize from "..";
 
 interface SaleInfo {
     id: number,
+    buyer_id: number,
     total_price: number,
     created_at?: string
 }
@@ -17,6 +18,15 @@ Sale.init({
         primaryKey: true,
         autoIncrement: true
     },
+    buyer_id: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: 'clients',
+            key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
+      },
     total_price: {
         type: DataTypes.FLOAT,
         allowNull: false,
