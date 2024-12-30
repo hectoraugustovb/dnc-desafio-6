@@ -45,6 +45,27 @@ class UsersController {
         return res.status(response.code).json(response.data);
     };
 
+    async updateUser (req: Request, res: Response) {
+        const data = req.body;
+        
+        if (!data.id)
+            return res
+                .status(400)
+                .json({ 
+                    message: `Missing property id in the body request` 
+                });
+
+        const response = await usersRepository.updateUser({
+            id: data.id,
+            name: data.name,
+            cpf: data.cpf,
+            email: data.email,
+            phone: data.phone
+        });
+
+        return res.status(response.code).json(response.data);
+    };
+
     async deleteUser (req: Request, res: Response) {
         const userId = parseInt(req.params.id);
 

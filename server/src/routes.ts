@@ -11,7 +11,8 @@ routes
     .get('/users', UsersController.getAllUsers)
     .get('/users/:id', UsersController.getUser)
     .post('/users', UsersController.createUser)
-    .delete('/users', UsersController.deleteUser)
+    .put('/users', UsersController.updateUser)
+    .delete('/users/:id', UsersController.deleteUser)
 
     .get('/products', ProductsController.getAllProducts)
     .get('/products/:id', ProductsController.getProduct)
