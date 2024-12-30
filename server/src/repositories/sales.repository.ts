@@ -1,6 +1,7 @@
+import { Sequelize } from "sequelize";
 import { Client, Sale, Product, Stock } from "../database/models/index";
 
-interface CreateProductData {
+interface ICreateProductData {
     client_id: number;
     products: {
         id: number;
@@ -12,13 +13,20 @@ export default {
     getAllSales: async (): Promise<{ code: number, data?: {} }> => {
         try {
             const sales = await Sale.findAll({
-                include: [{
-                    model: Client,
-                    as: 'client'
-                }, {
-                    model: Product,
-                    as: 'products'
-                }]
+                include: [
+                    {
+                        model: Client,
+                        as: 'client'
+                    },
+                    {
+                        model: Product,
+                        as: 'products',
+                        attributes: ['id', 'name', 'description', 'price'],
+                        through: {
+                            attributes: ['amount']
+                        }
+                    }
+                ],
             });
 
             return {
@@ -39,13 +47,20 @@ export default {
     getSale: async (id: number): Promise<{ code: number, data?: {} }> => {
         try {
             const sale = await Sale.findByPk(id, {
-                include: [{
-                    model: Client,
-                    as: 'client'
-                }, {
-                    model: Product,
-                    as: 'products'
-                }]
+                include: [
+                    {
+                        model: Client,
+                        as: 'client'
+                    },
+                    {
+                        model: Product,
+                        as: 'products',
+                        attributes: ['id', 'name', 'description', 'price'],
+                        through: {
+                            attributes: ['amount']
+                        }
+                    }
+                ]
             });
 
             if (!sale)
@@ -71,7 +86,7 @@ export default {
         }
     },
 
-    createSale: async (data: CreateProductData): Promise<{ code: number, data?: {} }> => {
+    createSale: async (data: ICreateProductData): Promise<{ code: number, data?: {} }> => {
         try {
             const buyer = await Client.findByPk(data.client_id);
             if (!buyer)

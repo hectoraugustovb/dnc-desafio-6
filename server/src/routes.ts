@@ -16,7 +16,8 @@ routes
     .get('/products', ProductsController.getAllProducts)
     .get('/products/:id', ProductsController.getProduct)
     .post('/products', ProductsController.createProduct)
-    .delete('/products', ProductsController.deleteProduct)
+    .put('/products', ProductsController.updateProduct)
+    .delete('/products/:id', ProductsController.deleteProduct)
 
     .get('/orders', OrdersController.getAllOrders)
     .get('/orders/:id', OrdersController.getOrder)

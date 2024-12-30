@@ -44,6 +44,27 @@ class ProductsController {
 
         return res.status(response.code).json(response.data);
     };
+
+    async updateProduct (req: Request, res: Response) {
+        const data = req.body;
+        
+        if (!data.id)
+            return res
+                .status(400)
+                .json({ 
+                    message: `Missing property id in the body request`
+                });
+
+        const response = await productsRepository.updateProduct({
+            id: data.id,
+            name: data.name,
+            price: data.price,
+            description: data.description,
+            amount: data.amount
+        });
+
+        return res.status(response.code).json(response.data);
+    };
     
     async deleteProduct (req: Request, res: Response) {
         const productId = parseInt(req.params.id);

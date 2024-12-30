@@ -1,5 +1,20 @@
 import { Product, Stock } from "../database/models/index";
 
+interface ICreateProductData {
+    name: string;
+    price: number;
+    amount: number;
+    description: string;
+}
+
+interface IUpdateProductData {
+    id: number;
+    name?: string;
+    price?: number;
+    amount?: number;
+    description?: string;
+}
+
 export default {
     getAllProducts: async (): Promise<{ code: number, data?: {} }> => {
         try {
@@ -57,7 +72,7 @@ export default {
         }
     },
 
-    createProduct: async (data: { name: string, price: number, amount: number, description: string }): Promise<{ code: number, data?: {} }>  => {
+    createProduct: async (data: ICreateProductData): Promise<{ code: number, data?: {} }>  => {
         try {
             const newProduct = await Product.create({
                 name: data.name,
@@ -81,14 +96,59 @@ export default {
             }
         }
     },
-    
-    deleteProduct: async (productId: number): Promise<{ code: number, data?: {} }> => {
+        
+    updateProduct: async (data: IUpdateProductData): Promise<{ code: number, data?: {} }> => {
         try {
-            await Product.destroy({ where: { id: productId } });
+            const product = await Product.findByPk(data.id);
+
+            if (!product)
+                return {
+                    code: 404,
+                    data: {
+                        message: 'Product not found'
+                    }
+                }
+
+            if (data.amount){
+                await Stock.update({ amount: data.amount }, { where: { product_id: data.id } });
+            }
+
+            const updateProductData = { ...data };
+            delete updateProductData.amount;
+
+            await product.update(updateProductData);
 
             return {
                 code: 200
             }
+        } catch (error) {
+            return {
+                code: 500,
+                data: {
+                    message: 'Error updating product'
+                }
+            }
+        }
+    },
+
+    deleteProduct: async (productId: number): Promise<{ code: number, data?: {} }> => {
+        try {
+            return await Product.destroy({ where: { id: productId } })
+                .then(result => {
+                    console.log(result)
+
+                    if (result == 0)
+                        return {
+                            code: 404,
+                            data: {
+                                message: 'Product not found'
+                            }
+                        }
+
+                    return {
+                        code: 200
+                    }
+                });
         } catch (error) {
             return {
                 code: 500,
