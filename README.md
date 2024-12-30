@@ -9,24 +9,24 @@
   - **Exemplo de resposta:**
     ```json
     [
-       {
-   		"id": 1,
-   		"cpf": 1234567890,
-   		"name": "John",
-   		"email": "John@gmail.com",
-   		"phone": 1234567890,
-   		"created_at": "2024-12-29T07:42:23.470Z",
-   		"updated_at": "2024-12-29T07:42:23.470Z",
-   		"orders": [],
-   		"sales": [
-   			{
-   				"id": 2,
-   				"buyer_id": 1,
-   				"total_price": 260,
-   				"created_at": "2024-12-29T07:47:44.705Z"
-   			}
-   		]
-	   }
+      {
+	   "id": 1,
+	   "cpf": 1234567890,
+	   "name": "John",
+	   "email": "John@gmail.com",
+	   "phone": 1234567890,
+	   "created_at": "2024-12-29T07:42:23.470Z",
+	   "updated_at": "2024-12-29T07:42:23.470Z",
+	   "orders": [],
+	   "sales": [
+	         {
+	            "id": 2,
+	            "buyer_id": 1,
+	            "total_price": 260,
+	            "created_at": "2024-12-29T07:47:44.705Z"
+	         }
+	   ]
+      }
     ]
     ```
 
@@ -70,36 +70,36 @@
   - **Exemplo de resposta:**
     ```json
     [
-   	{
-   		"id": 1,
-   		"name": "Mouse",
-   		"description": "Mouse",
-   		"price": 50,
-   		"created_at": "2024-12-30T12:17:13.956Z",
-   		"updated_at": "2024-12-30T12:17:13.956Z",
-   		"stock": {
-   			"id": 1,
-   			"product_id": 1,
-   			"amount": 20,
-   			"created_at": "2024-12-30T12:17:13.977Z",
-   			"updated_at": "2024-12-30T12:17:13.977Z"
-   		}
-   	},
-   	{
-   		"id": 2,
-   		"name": "Keyboard",
-   		"description": "Keyboard",
-   		"price": 100,
-   		"created_at": "2024-12-30T12:17:13.956Z",
-   		"updated_at": "2024-12-30T12:17:13.956Z",
-   		"stock": {
-   			"id": 2,
-   			"product_id": 2,
-   			"amount": 20,
-   			"created_at": "2024-12-30T12:17:13.977Z",
-   			"updated_at": "2024-12-30T12:17:13.977Z"
-   		}
-   	},
+         {
+            "id": 1,
+            "name": "Mouse",
+            "description": "Mouse",
+            "price": 50,
+            "created_at": "2024-12-30T12:17:13.956Z",
+            "updated_at": "2024-12-30T12:17:13.956Z",
+            "stock": {
+                  "id": 1,
+                  "product_id": 1,
+                  "amount": 20,
+                  "created_at": "2024-12-30T12:17:13.977Z",
+                  "updated_at": "2024-12-30T12:17:13.977Z"
+               }
+          },
+          {
+             "id": 2,
+             "name": "Keyboard",
+             "description": "Keyboard",
+             "price": 100,
+             "created_at": "2024-12-30T12:17:13.956Z",
+             "updated_at": "2024-12-30T12:17:13.956Z",
+             "stock": {
+                  "id": 2,
+                  "product_id": 2,
+                  "amount": 20,
+                  "created_at": "2024-12-30T12:17:13.977Z",
+                  "updated_at": "2024-12-30T12:17:13.977Z"
+             }
+         },
     ]
     ```
 
@@ -144,40 +144,40 @@
   - **Exemplo de resposta:**
     ```json
     [
-   	{
-   		"id": 2,
-   		"buyer_id": 1,
-   		"total_price": 260,
-   		"created_at": "2024-12-29T07:47:44.705Z",
-   		"client": {
-   			"id": 1,
-   			"cpf": 1234567890,
-   			"name": "John",
-   			"email": "John@gmail.com",
-   			"phone": 1234567890,
-   			"created_at": "2024-12-29T07:42:23.470Z",
-   			"updated_at": "2024-12-29T07:42:23.470Z"
-   		},
-   		"products": [
-   			{
-   				"id": 1,
-   				"name": "Mouse",
-   				"description": "Mouse",
-   				"price": 50,
-   				"SalesProducts": {
-   					"amount": 2
-   				}
-   			},
-   			{
-   				"id": 3,
-   				"name": "Book",
-   				"description": "Book",
-   				"price": 80,
-   				"SalesProducts": {
-   					"amount": 2
-   				}
-   			}
-   		]
+         {
+            "id": 2,
+            "buyer_id": 1,
+            "total_price": 260,
+            "created_at": "2024-12-29T07:47:44.705Z",
+            "client": {
+               "id": 1,
+               "cpf": 1234567890,
+               "name": "John",
+               "email": "John@gmail.com",
+               "phone": 1234567890,
+               "created_at": "2024-12-29T07:42:23.470Z",
+               "updated_at": "2024-12-29T07:42:23.470Z"
+             },
+             "products": [
+               {
+                  "id": 1,
+                  "name": "Mouse",
+                  "description": "Mouse",
+                  "price": 50,
+                  "SalesProducts": {
+                     "amount": 2
+                  }
+               },
+               {
+                  "id": 3,
+                  "name": "Book",
+                  "description": "Book",
+                  "price": 80,
+                  "SalesProducts": {
+                     "amount": 2
+                  }
+               }
+            ]
    	}
     ]
     ```
@@ -214,41 +214,41 @@
   - **Exemplo de resposta:**
     ```json
     [
-   	{
-   		"id": 1,
-   		"buyer_id": 1,
-   		"total_price": 260,
-   		"status": "pending",
-   		"created_at": "2024-12-30T11:59:22.985Z",
-   		"client": {
-   			"id": 1,
-   			"cpf": 12345678901,
-   			"name": "John",
-   			"email": "John@gmail.com",
-   			"phone": 12345678901,
-   			"created_at": "2024-12-30T11:40:24.756Z",
-   			"updated_at": "2024-12-30T11:40:24.756Z"
-   		},
-   		"products": [
-   			{
-   				"id": 1,
-   				"name": "Mouse",
-   				"description": "Mouse",
-   				"price": 50,
-   				"OrdersProducts": {
-   					"amount": 2
-   				}
-   			},
-   			{
-   				"id": 3,
-   				"name": "Book",
-   				"description": "Book",
-   				"price": 80,
-   				"OrdersProducts": {
-   					"amount": 2
-   				}
-   			}
-   		]
+         {
+            "id": 1,
+            "buyer_id": 1,
+            "total_price": 260,
+            "status": "pending",
+            "created_at": "2024-12-30T11:59:22.985Z",
+            "client": {
+               "id": 1,
+               "cpf": 12345678901,
+               "name": "John",
+               "email": "John@gmail.com",
+               "phone": 12345678901,
+               "created_at": "2024-12-30T11:40:24.756Z",
+               "updated_at": "2024-12-30T11:40:24.756Z"
+            },
+            "products": [
+               {
+                  "id": 1,
+                  "name": "Mouse",
+                  "description": "Mouse",
+                  "price": 50,
+                  "OrdersProducts": {
+                     "amount": 2
+                  }
+               },
+               {
+                  "id": 3,
+                  "name": "Book",
+                  "description": "Book",
+                  "price": 80,
+                  "OrdersProducts": {
+                     "amount": 2
+                  }
+               }
+            ]
    	}
     ]
     ```
