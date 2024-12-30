@@ -9,6 +9,15 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true
       },
+      buyer_id: {
+        type: Sequelize.INTEGER,
+        references: {
+            model: 'clients',
+            key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL'
+      },
       total_price: {
         type: Sequelize.FLOAT,
         allowNull: false,
