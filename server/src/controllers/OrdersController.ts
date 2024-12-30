@@ -2,10 +2,14 @@ import { Request, Response } from 'express';
 
 import ordersRepository from '../repositories/orders.repository';
 
-const orderReqProps = [
+const createOrderReqProps = [
     'client_id',
-    'products',
-    'amount'
+    'products'
+]
+
+const updateOrderReqProps = [
+    'id',
+    'status'
 ]
 
 class OrdersController {
@@ -26,18 +30,59 @@ class OrdersController {
     async createOrder (req: Request, res: Response) {
         const data = req.body;
         
-        const missingProp = orderReqProps.find(prop => !data[prop]);
+        const missingProp = createOrderReqProps.find(prop => !data[prop]);
         if (missingProp)
             return res
                 .status(400)
                 .json({ 
-                    message: `Missing property ${missingProp} in the body request`
+                    message: `Missing property ${missingProp} in the body request` 
                 });
 
+        for (let product of data.products) {
+            if (!product.id)
+                return res
+                   .status(400)
+                   .json({ 
+                        message: `Missing product id in the body request` 
+                   });
+            
+            if (!product.amount)
+                return res
+                    .status(400)
+                    .json({ 
+                        message: `Missing product amount in the body request (Product ID: ${product.id})` 
+                    });
+        }
+        
         const response = await ordersRepository.createOrder({
             client_id: data.client_id,
-            products: data.products,
-            amount: data.amount
+            products: data.products
+        });
+
+        return res.status(response.code).json(response.data);
+    };
+
+    async updateOrder (req: Request, res: Response) {
+        const data = req.body;
+        
+        const missingProp = updateOrderReqProps.find(prop => !data[prop]);
+        if (missingProp)
+            return res
+                .status(400)
+                .json({ 
+                    message: `Missing property ${missingProp} in the body request` 
+                });
+
+        if (!['pending', 'processing', 'shipped', 'delivered', 'cancelled'].includes(data.status))
+            return res
+               .status(400)
+               .json({ 
+                    message: `Invalid status provided.`
+                });
+        
+        const response = await ordersRepository.updateOrder({
+            id: data.id,
+            status: data.status
         });
 
         return res.status(response.code).json(response.data);

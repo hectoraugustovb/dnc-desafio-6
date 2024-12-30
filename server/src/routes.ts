@@ -23,7 +23,8 @@ routes
     .get('/orders', OrdersController.getAllOrders)
     .get('/orders/:id', OrdersController.getOrder)
     .post('/orders', OrdersController.createOrder)
-    .delete('/orders', OrdersController.deleteOrder)
+    .put('/orders', OrdersController.updateOrder)
+    .delete('/orders/:id', OrdersController.deleteOrder)
 
     .get('/sales', SalesController.getAllSales)
     .get('/sales/:id', SalesController.getSale)

@@ -1,5 +1,6 @@
-import { Sequelize } from "sequelize";
 import { Client, Sale, Product, Stock } from "../database/models/index";
+import checkProduct from "./utils/checkProduct";
+import ProductError from "./utils/ProductError";
 
 interface ICreateProductData {
     client_id: number;
@@ -102,29 +103,7 @@ export default {
                 products: []
             };
             for (let product of data.products) {
-                const gettedProduct = await Product.findByPk(product.id, {
-                    include: [{
-                        model: Stock,
-                        as: 'stock'
-                    }]
-                });
-
-                if (!gettedProduct) {
-                    return {
-                        code: 404,
-                        data: {
-                            message: `Product not found: ID - ${product.id}`
-                        }
-                    }
-                }
-
-                if (gettedProduct.dataValues.stock?.amount === 0)
-                    return {
-                        code: 400,
-                        data: {
-                            message: 'Insufficient stock'
-                        }
-                    }
+                const gettedProduct = await checkProduct(product);
 
                 productsData.totalPrice += gettedProduct.dataValues.price * product.amount;
                 productsData.products.push({
@@ -132,8 +111,8 @@ export default {
                     product: gettedProduct
                 });
 
+                //-----Update product stock
                 const productStock = await Stock.findByPk(product.id);
-
                 await productStock?.update({
                     amount: productStock.dataValues.amount - product.amount
                 });
@@ -163,10 +142,18 @@ export default {
                 code: 201
             }
         } catch (error) {
+            if (error instanceof ProductError)
+                return {
+                    code: error.statusCode,
+                    data: {
+                        message: error.message
+                    }
+                };
+
             return {
                 code: 500,
                 data: {
-                    message: 'Error creating sale'
+                    message: 'Error creating Sale'
                 }
             }
         }
