@@ -299,7 +299,7 @@
 2. Navegue até o diretório do projeto:
 
    ```bash
-   git clone https://github.com/hectoraugustovb/dnc-desafio-6.git
+   cd ./dnc-desafio-6
    ```
 
 3. Instale as dependências:
